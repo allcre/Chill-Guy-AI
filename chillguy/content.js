@@ -79,15 +79,7 @@ function createCommentaryPopup(text) {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "activateChillGuy") {
-    chrome.runtime.sendMessage({action: "generateContent", input: "Activate Chill Guy"}, (response) => {
-      if (response.success) {
-        const chillGuy = createChillGuyElement(response.data.text);
-        document.body.appendChild(chillGuy);
-        setTimeout(() => {
-          chillGuy.remove();
-        }, 5000);
-      }
-    });
+    activateChillGuy();
   }
   if (request.action === 'showCommentary') {
     const popup = createCommentaryPopup(request.commentary);
