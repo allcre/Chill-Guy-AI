@@ -73,6 +73,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     showPopup(request.baseUrl);
     // lastPopupTime = currentTime;
   }
+  if (request.action === 'showCommentary') {
+    const popup = createCommentaryPopup(request.commentary);
+    document.body.appendChild(popup);
+  }
 });
 
 function showPopup(baseUrl) {
