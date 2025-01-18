@@ -24,8 +24,20 @@ function activateChillGuy() {
   });
 }
 
-// Automatically activate Chill Guy when TikTok is loaded
-window.addEventListener('load', activateChillGuy);
+function checkForRizz() {
+  const pageContent = document.body.innerText.toLowerCase();
+  if (pageContent.includes('rizz')) {
+    activateChillGuy();
+  }
+}
+
+// Activate Chill Guy when TikTok is loaded
+if (window.location.hostname.includes('tiktok.com')) {
+  window.addEventListener('load', activateChillGuy);
+}
+
+// Run the "rizz" check every 5 seconds on all pages
+setInterval(checkForRizz, 5000);
 
 // Keep the existing message listener for manual activation
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
