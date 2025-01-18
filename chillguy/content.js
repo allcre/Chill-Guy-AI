@@ -1,17 +1,3 @@
-function createChillGuyElement(text) {
-  const chillGuy = document.createElement('div');
-  chillGuy.style.position = 'fixed';
-  chillGuy.style.bottom = '20px';
-  chillGuy.style.right = '20px';
-  chillGuy.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-  chillGuy.style.color = 'white';
-  chillGuy.style.padding = '10px';
-  chillGuy.style.borderRadius = '5px';
-  chillGuy.style.zIndex = '9999';
-  chillGuy.textContent = text;
-  return chillGuy;
-}
-
 // Create and style the popup element
 function createCommentaryPopup(text, audioData) {
   console.log('Creating popup with:', { text, hasAudio: !!audioData });
@@ -166,13 +152,22 @@ function createCommentaryPopup(text, audioData) {
   content.textContent = text;
   popup.appendChild(content);
 
-  // Auto-remove after 10 seconds
+  const img = document.createElement('img');
+  img.src = chrome.runtime.getURL('95c.png');
+  img.style.width = '100px';
+  img.style.height = 'auto';
+  img.style.display = 'block';
+  img.style.marginBottom = '10px';
+
+  popup.appendChild(img);
+
+  // Auto-remove after 15 seconds
   setTimeout(() => {
     if (popup.parentNode) {
       console.log('Auto-removing popup after 10 seconds');
       popup.remove();
     }
-  }, 10000);
+  }, 100000);
 
   return popup;
 }
