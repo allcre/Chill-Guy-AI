@@ -10,7 +10,21 @@ function createChillGuyElement(text) {
   chillGuy.style.padding = '10px';
   chillGuy.style.borderRadius = '5px';
   chillGuy.style.zIndex = '9999';
-  chillGuy.textContent = text;
+  
+  // Create and add the image
+  const img = document.createElement('img');
+  img.src = chrome.runtime.getURL('95c.png');
+  img.style.width = '100px';
+  img.style.height = 'auto';
+  img.style.display = 'block';
+  img.style.marginBottom = '10px';
+  
+  chillGuy.appendChild(img);
+  
+  const textElement = document.createElement('p');
+  textElement.textContent = text;
+  chillGuy.appendChild(textElement);
+  
   return chillGuy;
 }
 

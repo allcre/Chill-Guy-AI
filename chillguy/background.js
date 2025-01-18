@@ -148,7 +148,10 @@ function mockGroqApiCall(input) {
         "Dude, you're vibing hard right now!"
       ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      resolve({ text: randomResponse, audio: "mock_audio_url" });
+      resolve({ 
+        text: randomResponse, 
+        imageUrl: chrome.runtime.getURL('95c.png')
+      });
     }, 1000);
   });
 }
