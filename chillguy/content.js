@@ -12,16 +12,24 @@ function createChillGuyElement(text) {
   return chillGuy;
 }
 
+function activateChillGuy() {
+  chrome.runtime.sendMessage({ action: "generateContent", input: "Activate Chill Guy" }, (response) => {
+    if (response.success) {
+      const chillGuy = createChillGuyElement(response.data.text);
+      document.body.appendChild(chillGuy);
+      setTimeout(() => {
+        chillGuy.remove();
+      }, 5000);
+    }
+  });
+}
+
+// Automatically activate Chill Guy when TikTok is loaded
+window.addEventListener('load', activateChillGuy);
+
+// Keep the existing message listener for manual activation
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "activateChillGuy") {
-    chrome.runtime.sendMessage({action: "generateContent", input: "Activate Chill Guy"}, (response) => {
-      if (response.success) {
-        const chillGuy = createChillGuyElement(response.data.text);
-        document.body.appendChild(chillGuy);
-        setTimeout(() => {
-          chillGuy.remove();
-        }, 5000);
-      }
-    });
+    activateChillGuy();
   }
 });
