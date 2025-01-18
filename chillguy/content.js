@@ -13,7 +13,7 @@ function createChillGuyElement(text) {
 }
 
 // Create and style the popup element
-function createCommentaryPopup(text) {
+function createCommentaryPopup(text, audioUrl) {
   const popup = document.createElement('div');
   popup.style.cssText = `
     position: fixed;
@@ -42,28 +42,73 @@ function createCommentaryPopup(text) {
   `;
   document.head.appendChild(style);
 
-  // Add close button
-  const closeButton = document.createElement('button');
-  closeButton.innerHTML = '×';
-  closeButton.style.cssText = `
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 5px;
-  `;
-  closeButton.onclick = () => popup.remove();
+  // Add audio player if audioUrl is available
+  if (audioUrl) {
+    const audio = new Audio(audioUrl);
 
-  // Add the text
+    // Add play button
+    const playButton = document.createElement('button');
+    playButton.innerHTML = '<i class="fa fa-play"></i>';
+    playButton.style.cssText = `
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+      margin-right: 5px;
+    `;
+    playButton.onclick = () => audio.play();
+
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    `;
+
+    // Add close button (existing code)
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '×';
+    closeButton.style.cssText = `
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 5px;
+    `;
+    closeButton.onclick = () => {
+      audio.pause();
+      popup.remove();
+    };
+
+    buttonContainer.appendChild(playButton);
+    buttonContainer.appendChild(closeButton);
+    popup.appendChild(buttonContainer);
+  } else {
+    // Just add the close button if no audio
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '×';
+    closeButton.style.cssText = `
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 5px;
+    `;
+    closeButton.onclick = () => popup.remove();
+    popup.appendChild(closeButton);
+  }
+
+  // Add the text content
   const content = document.createElement('div');
   content.style.marginTop = '10px';
   content.textContent = text;
-
-  popup.appendChild(closeButton);
   popup.appendChild(content);
 
   // Auto-remove after 10 seconds
@@ -90,7 +135,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
   }
   if (request.action === 'showCommentary') {
-    const popup = createCommentaryPopup(request.commentary);
+    const popup = createCommentaryPopup(request.commentary, request.audioUrl);
     document.body.appendChild(popup);
   }
 });

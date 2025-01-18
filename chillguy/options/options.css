@@ -82,3 +82,20 @@ button i {
     margin-top: 10px;
     color: #333;
 }
+
+.api-section {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.api-section h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}

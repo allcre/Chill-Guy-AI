@@ -11,23 +11,37 @@
 
 <body>
   <div class="container">
-    <h1 id="optionsTitle"></h1>
-    <p id="apiTitle"></p>
-    <div id="input-container">
-      <input type="text" id="apiKey">
-      <button id="save-button" title="Save API key">
-        <i class="fa fa-save"></i>
-        <span id="save-button-text"></span>
-      </button>
+    <h1 id="optionsTitle">API Settings</h1>
+
+    <div class="api-section">
+      <h2>Groq API</h2>
+      <div class="input-container">
+        <input type="text" id="apiKey" placeholder="Enter your Groq API key">
+        <button id="save-groq-button" title="Save API key">
+          <i class="fa fa-save"></i>
+          <span>Save</span>
+        </button>
+      </div>
     </div>
+
+    <div class="api-section">
+      <h2>ElevenLabs API</h2>
+      <div class="input-container">
+        <input type="text" id="elevenLabsKey" placeholder="Enter your ElevenLabs API key">
+        <button id="save-eleven-button" title="Save API key">
+          <i class="fa fa-save"></i>
+          <span>Save</span>
+        </button>
+      </div>
+    </div>
+
     <div id="delete-container">
-      <button id="delete-button" title="Delete API key">
+      <button id="delete-button" title="Delete API keys">
         <i class="fa fa-trash"></i>
-        <span id="delete-button-text"></span>
+        <span>Delete All Keys</span>
       </button>
       <p id="status-message"></p>
     </div>
-    <p id="api-key-note" class="note"></p>
   </div>
   <script src="options.js"></script>
 </body>

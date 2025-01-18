@@ -153,7 +153,44 @@ function mockGroqApiCall(input) {
   });
 }
 
-// Listen for completed web navigation
+// Fetch audio from ElevenLabs API
+async function fetchElevenLabsAudio(text) {
+  try {
+    const { elevenLabsKey } = await getStorageData(["elevenLabsKey"]);
+    if (!elevenLabsKey) return null;
+
+    const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': elevenLabsKey
+      },
+      body: JSON.stringify({
+        text: text,
+        model_id: "eleven_monolingual_v1",
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+          style: 0.5,
+          use_speaker_boost: true
+        }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`ElevenLabs API error: ${response.status}`);
+    }
+
+    // Get the audio blob from the response
+    const audioBlob = await response.blob();
+    return URL.createObjectURL(audioBlob);
+  } catch (error) {
+    console.error('ElevenLabs API error:', error);
+    return null;
+  }
+}
+
+// Modify the existing navigation listener
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (details.frameId === 0 && !details.url.startsWith('chrome://')) {
     const message = { userInput: `what do you think of ${details.url}` };
@@ -184,10 +221,14 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
 
       await chrome.storage.local.set({ chatHistory: updatedHistory });
 
-      // Send message to content script to show popup
+      // Generate audio from the response
+      const audioUrl = await fetchElevenLabsAudio(assistantResponse);
+
+      // Send both text and audio to content script
       chrome.tabs.sendMessage(details.tabId, {
         action: 'showCommentary',
-        commentary: assistantResponse
+        commentary: assistantResponse,
+        audioUrl: audioUrl
       });
     }
   }

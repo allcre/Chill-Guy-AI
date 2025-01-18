@@ -1,52 +1,64 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Fetch the elements
-  const apiKeyInput = document.getElementById('apiKey');
-  const saveButton = document.getElementById('save-button');
+  const groqKeyInput = document.getElementById('apiKey');
+  const elevenLabsKeyInput = document.getElementById('elevenLabsKey');
+  const saveGroqButton = document.getElementById('save-groq-button');
+  const saveElevenButton = document.getElementById('save-eleven-button');
   const deleteButton = document.getElementById('delete-button');
   const statusMessage = document.getElementById('status-message');
 
-  // Retrieve the saved API key from local storage
-  chrome.storage.local.get(['apiKey'], function (result) {
-    if (result.apiKey) {
-      apiKeyInput.value = result.apiKey;
-    }
+  // Retrieve saved API keys
+  chrome.storage.local.get(['apiKey', 'elevenLabsKey'], function (result) {
+    if (result.apiKey) groqKeyInput.value = result.apiKey;
+    if (result.elevenLabsKey) elevenLabsKeyInput.value = result.elevenLabsKey;
   });
 
-  // Add event listener to the save button
-  saveButton.addEventListener('click', function () {
-    // Get the entered API key
-    const apiKey = apiKeyInput.value.trim();
-
-    // Check if the API key is not empty
-    if (apiKey !== '' && apiKey.length > 10 && apiKey.length < 100 && apiKey.includes('gsk_')) {
-      // Save the API key to local storage
+  // Save Groq API key
+  saveGroqButton.addEventListener('click', function () {
+    const apiKey = groqKeyInput.value.trim();
+    if (isValidGroqKey(apiKey)) {
       chrome.storage.local.set({ apiKey }, function () {
-        // Update the status message
-        statusMessage.textContent = 'API key saved successfully!';
-        setTimeout(function () {
-          // Clear the status message after 2 seconds
-          statusMessage.textContent = '';
-        }, 2000);
+        showStatus('Groq API key saved successfully!');
       });
     } else {
-      // Display an error message if the API key is empty
-      statusMessage.textContent = 'Please enter a valid API key.';
+      showStatus('Please enter a valid Groq API key.');
     }
   });
 
-  // Add event listener to the delete button
-  deleteButton.addEventListener('click', function () {
-    // Remove the API key from local storage
-    chrome.storage.local.remove(['apiKey'], function () {
-      // Update the status message
-      statusMessage.textContent = 'API key deleted successfully!';
-      apiKeyInput.value = '';
-      setTimeout(function () {
-        // Clear the status message after 2 seconds
-        statusMessage.textContent = '';
-      }, 2000);
-    });
+  // Save ElevenLabs API key
+  saveElevenButton.addEventListener('click', function () {
+    const elevenLabsKey = elevenLabsKeyInput.value.trim();
+    if (isValidElevenLabsKey(elevenLabsKey)) {
+      chrome.storage.local.set({ elevenLabsKey }, function () {
+        showStatus('ElevenLabs API key saved successfully!');
+      });
+    } else {
+      showStatus('Please enter a valid ElevenLabs API key.');
+    }
   });
+
+  // Delete all API keys
+  deleteButton.addEventListener('click', function () {
+    if (confirm('Are you sure you want to delete all API keys?')) {
+      chrome.storage.local.remove(['apiKey', 'elevenLabsKey'], function () {
+        groqKeyInput.value = '';
+        elevenLabsKeyInput.value = '';
+        showStatus('All API keys deleted successfully!');
+      });
+    }
+  });
+
+  function isValidGroqKey(key) {
+    return key !== '' && key.length > 10 && key.length < 100 && key.includes('gsk_');
+  }
+
+  function isValidElevenLabsKey(key) {
+    return key !== '' && key.length > 10 && key.length < 100;
+  }
+
+  function showStatus(message) {
+    statusMessage.textContent = message;
+    setTimeout(() => statusMessage.textContent = '', 2000);
+  }
 });
 
 // localize title optionsTitle
