@@ -1,3 +1,5 @@
+let lastPopupTime = 0;
+
 function createChillGuyElement(text) {
   const chillGuy = document.createElement('div');
   chillGuy.style.position = 'fixed';
