@@ -164,20 +164,28 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
     const { apiModel } = await getStorageData(["apiModel"]);
 
     // Get chat history
-    const result = await getStorageData(["chatHistory"]);
-    chatHistory = result.chatHistory || [
-      { role: "system", content: "I'm your helpful chat bot! I provide helpful and concise answers." }
-    ];
+    const { chatHistory: existingHistory } = await getStorageData(["chatHistory"]);
+    let updatedHistory = existingHistory || [];
+
+    if (updatedHistory.length === 0) {
+      updatedHistory.push({
+        role: "system",
+        content: "I'm your helpful chat bot! I provide helpful and concise answers."
+      });
+    }
 
     // Add user message
-    chatHistory.push({ role: "user", content: message.userInput });
+    updatedHistory.push({ role: "user", content: message.userInput });
 
     // Send to AI and handle response
-    const response = await fetchChatCompletion(chatHistory, apiKey, apiModel);
+    const response = await fetchChatCompletion(updatedHistory, apiKey, apiModel);
     if (response?.choices?.[0]?.message?.content) {
       const assistantResponse = response.choices[0].message.content;
-      chatHistory.push({ role: "assistant", content: assistantResponse });
-      chrome.storage.local.set({ chatHistory });
+      updatedHistory.push({ role: "assistant", content: assistantResponse });
+
+      // Save the updated history
+      await chrome.storage.local.set({ chatHistory: updatedHistory });
+      console.log('Chat history updated:', updatedHistory); // Debug log
     }
   }
 });
