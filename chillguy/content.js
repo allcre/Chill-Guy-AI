@@ -47,9 +47,35 @@ if (window.location.hostname.includes('tiktok.com')) {
 // Run the "rizz" check every 5 seconds on all pages
 setInterval(checkForRizz, 5000);
 
-// Keep the existing message listener for manual activation
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "activateChillGuy") {
     activateChillGuy();
+  } else if (request.action === "showPopup") {
+    // const currentTime = Date.now();
+    // if (currentTime - lastPopupTime < 3000) {
+    //   return; // Don't show popup if less than 10 seconds have passed
+    // }
+    console.log("showing popup with ", request.baseUrl);
+    showPopup(request.baseUrl);
+    // lastPopupTime = currentTime;
   }
 });
+
+function showPopup(baseUrl) {
+  const popup = document.createElement('div');
+  popup.style.position = 'fixed';
+  popup.style.top = '20px';
+  popup.style.right = '20px';
+  popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  popup.style.color = 'white';
+  popup.style.padding = '10px';
+  popup.style.borderRadius = '5px';
+  popup.style.zIndex = '9999';
+  popup.textContent = `Bro, are you really on ${baseUrl} right now?`;
+
+  document.body.appendChild(popup);
+
+  setTimeout(() => {
+    popup.remove();
+  }, 5000);
+}

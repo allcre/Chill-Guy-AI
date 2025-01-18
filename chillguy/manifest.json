@@ -5,10 +5,11 @@
   "description": "An AI-powered desktop assistant with a chill attitude",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "host_permissions": [
-    "*://*.tiktok.com/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html"
