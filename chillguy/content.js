@@ -1,3 +1,5 @@
+let lastPopupTime = 0;
+
 function createChillGuyElement(text) {
   const chillGuy = document.createElement('div');
   chillGuy.style.position = 'fixed';
@@ -13,10 +15,16 @@ function createChillGuyElement(text) {
 }
 
 function activateChillGuy() {
+  const currentTime = Date.now();
+  if (currentTime - lastPopupTime < 10000) {
+    return; // Don't show popup if less than 10 seconds have passed
+  }
+
   chrome.runtime.sendMessage({ action: "generateContent", input: "Activate Chill Guy" }, (response) => {
     if (response.success) {
       const chillGuy = createChillGuyElement(response.data.text);
       document.body.appendChild(chillGuy);
+      lastPopupTime = currentTime;
       setTimeout(() => {
         chillGuy.remove();
       }, 5000);
