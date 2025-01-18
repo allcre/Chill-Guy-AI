@@ -3,7 +3,13 @@
   "name": "Chill Guy AI Assistant",
   "version": "1.0",
   "description": "An AI-powered desktop assistant with a chill attitude",
-  "permissions": ["activeTab", "storage", "downloads", "webNavigation"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "downloads",
+    "webNavigation",
+    "notifications"
+  ],
   "action": {
     "default_popup": "popup/popup.html"
   },

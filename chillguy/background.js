@@ -155,15 +155,12 @@ function mockGroqApiCall(input) {
 
 // Listen for completed web navigation
 chrome.webNavigation.onCompleted.addListener(async (details) => {
-  // Only handle main frame navigation (not iframes etc)
   if (details.frameId === 0 && !details.url.startsWith('chrome://')) {
     const message = { userInput: `what do you think of ${details.url}` };
 
-    // Get API key and model
     const { apiKey } = await getStorageData(["apiKey"]);
     const { apiModel } = await getStorageData(["apiModel"]);
 
-    // Get chat history
     const { chatHistory: existingHistory } = await getStorageData(["chatHistory"]);
     let updatedHistory = existingHistory || [];
 
@@ -174,18 +171,20 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       });
     }
 
-    // Add user message
     updatedHistory.push({ role: "user", content: message.userInput });
 
-    // Send to AI and handle response
     const response = await fetchChatCompletion(updatedHistory, apiKey, apiModel);
     if (response?.choices?.[0]?.message?.content) {
       const assistantResponse = response.choices[0].message.content;
       updatedHistory.push({ role: "assistant", content: assistantResponse });
 
-      // Save the updated history
       await chrome.storage.local.set({ chatHistory: updatedHistory });
-      console.log('Chat history updated:', updatedHistory); // Debug log
+
+      // Send message to content script to show popup
+      chrome.tabs.sendMessage(details.tabId, {
+        action: 'showCommentary',
+        commentary: assistantResponse
+      });
     }
   }
 });
