@@ -153,35 +153,31 @@ function mockGroqApiCall(input) {
   });
 }
 
-// Listen for new tab creation
-chrome.tabs.onCreated.addListener(async (tab) => {
-  // Wait a bit for the URL to be set
-  setTimeout(async () => {
-    const updatedTab = await chrome.tabs.get(tab.id);
-    if (updatedTab.url && !updatedTab.url.startsWith('chrome://')) {
-      // Create message object matching existing message format
-      const message = { userInput: `what do you think of ${updatedTab.url}` };
+// Listen for completed web navigation
+chrome.webNavigation.onCompleted.addListener(async (details) => {
+  // Only handle main frame navigation (not iframes etc)
+  if (details.frameId === 0 && !details.url.startsWith('chrome://')) {
+    const message = { userInput: `what do you think of ${details.url}` };
 
-      // Get API key and model
-      const { apiKey } = await getStorageData(["apiKey"]);
-      const { apiModel } = await getStorageData(["apiModel"]);
+    // Get API key and model
+    const { apiKey } = await getStorageData(["apiKey"]);
+    const { apiModel } = await getStorageData(["apiModel"]);
 
-      // Get chat history
-      const result = await getStorageData(["chatHistory"]);
-      chatHistory = result.chatHistory || [
-        { role: "system", content: "I'm your helpful chat bot! I provide helpful and concise answers." }
-      ];
+    // Get chat history
+    const result = await getStorageData(["chatHistory"]);
+    chatHistory = result.chatHistory || [
+      { role: "system", content: "I'm your helpful chat bot! I provide helpful and concise answers." }
+    ];
 
-      // Add user message
-      chatHistory.push({ role: "user", content: message.userInput });
+    // Add user message
+    chatHistory.push({ role: "user", content: message.userInput });
 
-      // Send to AI and handle response
-      const response = await fetchChatCompletion(chatHistory, apiKey, apiModel);
-      if (response?.choices?.[0]?.message?.content) {
-        const assistantResponse = response.choices[0].message.content;
-        chatHistory.push({ role: "assistant", content: assistantResponse });
-        chrome.storage.local.set({ chatHistory });
-      }
+    // Send to AI and handle response
+    const response = await fetchChatCompletion(chatHistory, apiKey, apiModel);
+    if (response?.choices?.[0]?.message?.content) {
+      const assistantResponse = response.choices[0].message.content;
+      chatHistory.push({ role: "assistant", content: assistantResponse });
+      chrome.storage.local.set({ chatHistory });
     }
-  }, 500);
+  }
 });
