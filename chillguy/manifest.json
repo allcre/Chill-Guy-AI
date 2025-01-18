@@ -3,23 +3,29 @@
   "name": "Chill Guy AI Assistant",
   "version": "1.0",
   "description": "An AI-powered desktop assistant with a chill attitude",
-  "permissions": ["activeTab", "storage"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "downloads"
+  ],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "128": "images/icon128.png"
-    }
+    "default_popup": "popup/popup.html"
   },
+  "options_page": "options/options.html",
+  "host_permissions": [
+    "https://api.groq.com/openai/v1/completions"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
-  ],
-  "icons": {
-    "128": "images/icon128.png"
-  }
+  ]
 }
