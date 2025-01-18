@@ -13,8 +13,8 @@ function createChillGuyElement(text) {
 }
 
 // Create and style the popup element
-function createCommentaryPopup(text, audioUrl) {
-  console.log('Creating popup with:', { text, audioUrl });
+function createCommentaryPopup(text, audioData) {
+  console.log('Creating popup with:', { text, hasAudio: !!audioData });
 
   const popup = document.createElement('div');
   popup.style.cssText = `
@@ -45,8 +45,18 @@ function createCommentaryPopup(text, audioUrl) {
   document.head.appendChild(style);
 
   // Handle audio
-  if (audioUrl) {
-    console.log('Audio URL received:', audioUrl);
+  if (audioData) {
+    console.log('Audio data received, creating blob');
+    // Convert base64 back to blob
+    const binaryStr = atob(audioData);
+    const bytes = new Uint8Array(binaryStr.length);
+    for (let i = 0; i < binaryStr.length; i++) {
+      bytes[i] = binaryStr.charCodeAt(i);
+    }
+    const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    console.log('Created audio URL:', audioUrl);
     const audio = new Audio(audioUrl);
 
     // Debug audio events
@@ -167,16 +177,16 @@ function createCommentaryPopup(text, audioUrl) {
   return popup;
 }
 
-// Update message listener with debug logs
+// Update message listener
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Received message:', request);
 
   if (request.action === 'showCommentary') {
     console.log('Creating commentary popup with:', {
       commentary: request.commentary,
-      audioUrl: request.audioUrl
+      hasAudioData: !!request.audioData
     });
-    const popup = createCommentaryPopup(request.commentary, request.audioUrl);
+    const popup = createCommentaryPopup(request.commentary, request.audioData);
     document.body.appendChild(popup);
   }
 });

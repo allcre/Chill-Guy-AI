@@ -189,10 +189,15 @@ async function fetchElevenLabsAudio(text) {
     }
 
     console.log('Successfully received audio response');
-    const audioBlob = await response.blob();
-    const audioUrl = URL.createObjectURL(audioBlob);
-    console.log('Created audio URL:', audioUrl);
-    return audioUrl;
+    const audioBuffer = await response.arrayBuffer();
+    // Convert ArrayBuffer to Base64
+    const base64Audio = btoa(
+      new Uint8Array(audioBuffer)
+        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
+
+    console.log('Created base64 audio data');
+    return base64Audio;
   } catch (error) {
     console.error('ElevenLabs API error:', error);
     return null;
@@ -230,14 +235,14 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
 
       await chrome.storage.local.set({ chatHistory: updatedHistory });
 
-      // Generate audio from the response
-      const audioUrl = await fetchElevenLabsAudio(assistantResponse);
+      // Get audio as base64
+      const audioData = await fetchElevenLabsAudio(assistantResponse);
 
-      // Send both text and audio to content script
+      // Send both text and audio data to content script
       chrome.tabs.sendMessage(details.tabId, {
         action: 'showCommentary',
         commentary: assistantResponse,
-        audioUrl: audioUrl
+        audioData: audioData  // Send base64 audio data instead of URL
       });
     }
   }
