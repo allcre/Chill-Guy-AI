@@ -27,5 +27,15 @@
         "content.js"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "95c.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
   ]
 }
