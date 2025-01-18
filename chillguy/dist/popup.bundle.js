@@ -1,0 +1,1 @@
+document.getElementById("activateChillGuy").addEventListener("click",(function(){chrome.tabs.query({active:!0,currentWindow:!0},(function(e){chrome.tabs.sendMessage(e[0].id,{action:"activateChillGuy"})}))}));

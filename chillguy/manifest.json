@@ -6,7 +6,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "webNavigation"
+    "webNavigation",
+    "https://api.groq.com/"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -15,7 +16,8 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "dist/background.bundle.js",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -23,7 +25,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content.js"
+        "content.bundle.js"
       ]
     }
   ],
