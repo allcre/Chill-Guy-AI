@@ -156,9 +156,15 @@ function mockGroqApiCall(input) {
 // Fetch audio from ElevenLabs API
 async function fetchElevenLabsAudio(text) {
   try {
-    const { elevenLabsKey } = await getStorageData(["elevenLabsKey"]);
-    if (!elevenLabsKey) return null;
+    console.log('Fetching ElevenLabs audio for text:', text);
 
+    const { elevenLabsKey } = await getStorageData(["elevenLabsKey"]);
+    if (!elevenLabsKey) {
+      console.log('No ElevenLabs API key found');
+      return null;
+    }
+
+    console.log('Making ElevenLabs API request...');
     const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
       method: 'POST',
       headers: {
@@ -178,12 +184,15 @@ async function fetchElevenLabsAudio(text) {
     });
 
     if (!response.ok) {
+      console.error('ElevenLabs API error:', response.status);
       throw new Error(`ElevenLabs API error: ${response.status}`);
     }
 
-    // Get the audio blob from the response
+    console.log('Successfully received audio response');
     const audioBlob = await response.blob();
-    return URL.createObjectURL(audioBlob);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    console.log('Created audio URL:', audioUrl);
+    return audioUrl;
   } catch (error) {
     console.error('ElevenLabs API error:', error);
     return null;
