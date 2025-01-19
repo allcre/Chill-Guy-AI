@@ -40,21 +40,23 @@ Chill Guy was born from the desire to make productivity tools more relatable and
 - Integrate with other applications for more comprehensive tracking and rewards.
 
 ## Setup Instructions
+1. Clone this repository
+
 ### Chrome Extension
 #### Requirements
-Groq API key
-ElevenLabs API key
+- Groq API key
+- ElevenLabs API key
 
 1. Unpack the `chillguy` folder in `chrome://extensions`
 2. The first time the extension is run, you will be prompted to enter your Groq and EleventLabs API keys in the provided form. 
 
 ### Starknet
 #### Dependencies
-Node (>= v18.17)
-Yarn (v1 or v2+)
-Git
-Rust
-asdf
+- Node (>= v18.17)
+- Yarn (v1 or v2+)
+- Git
+- Rust
+- asdf
 
 1. Enter the starknet directory: `cd starknet`
 2. Run `yarn install`
