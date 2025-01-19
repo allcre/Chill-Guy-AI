@@ -98,7 +98,7 @@ function createCommentaryPopup(text, audioData) {
       }
     });
 
-    // Toggle play/pause
+    // Toggle play / pause
     audioButton.onclick = () => {
       console.log('Audio button clicked, current state:', isPlaying);
       if (isPlaying) {
