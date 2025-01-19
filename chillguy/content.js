@@ -10,7 +10,7 @@ function createChillGuyElement(text) {
   chillGuy.style.padding = '10px';
   chillGuy.style.borderRadius = '5px';
   chillGuy.style.zIndex = '9999';
-  
+
   // Create and add the image
   const img = document.createElement('img');
   img.src = chrome.runtime.getURL('95c.png');
@@ -18,18 +18,18 @@ function createChillGuyElement(text) {
   img.style.height = 'auto';
   img.style.display = 'block';
   img.style.marginBottom = '10px';
-  
+
   chillGuy.appendChild(img);
-  
+
   const textElement = document.createElement('p');
   textElement.textContent = text;
   chillGuy.appendChild(textElement);
-  
+
   return chillGuy;
 }
 
 // Create and style the popup element
-function createCommentaryPopup(text) {
+function createCommentaryPopup(text, imageUrl) {
   const popup = document.createElement('div');
   popup.style.cssText = `
     position: fixed;
@@ -74,6 +74,20 @@ function createCommentaryPopup(text) {
   `;
   closeButton.onclick = () => popup.remove();
 
+  // Add the image if provided
+  if (imageUrl) {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.style.cssText = `
+      width: 100px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px auto;
+      border-radius: 5px;
+    `;
+    popup.appendChild(img);
+  }
+
   // Add the text
   const content = document.createElement('div');
   content.style.marginTop = '10px';
@@ -97,16 +111,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "activateChillGuy") {
     activateChillGuy();
   } else if (request.action === "showPopup") {
-    // const currentTime = Date.now();
-    // if (currentTime - lastPopupTime < 3000) {
-    //   return; // Don't show popup if less than 10 seconds have passed
-    // }
     console.log("showing popup with ", request.baseUrl);
     showPopup(request.baseUrl);
-    // lastPopupTime = currentTime;
   }
   if (request.action === 'showCommentary') {
-    const popup = createCommentaryPopup(request.commentary);
+    const popup = createCommentaryPopup(request.commentary, request.imageUrl);
     document.body.appendChild(popup);
   }
 });

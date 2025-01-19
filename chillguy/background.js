@@ -148,8 +148,8 @@ function mockGroqApiCall(input) {
         "Dude, you're vibing hard right now!"
       ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      resolve({ 
-        text: randomResponse, 
+      resolve({
+        text: randomResponse,
         imageUrl: chrome.runtime.getURL('95c.png')
       });
     }, 1000);
@@ -190,7 +190,8 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       // Send message to content script to show popup
       chrome.tabs.sendMessage(details.tabId, {
         action: 'showCommentary',
-        commentary: assistantResponse
+        commentary: assistantResponse,
+        imageUrl: chrome.runtime.getURL('95c.png')
       });
     }
   }
