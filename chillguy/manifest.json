@@ -11,18 +11,21 @@
     "notifications",
     "audio"
   ],
-  "action": {
-    "default_popup": "popup/popup.html"
-  },
   "options_page": "options/options.html",
-  "host_permissions": ["https://api.groq.com/openai/v1/completions"],
+  "host_permissions": [
+    "https://api.groq.com/openai/v1/completions"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ]
 }
