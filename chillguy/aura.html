@@ -8,15 +8,146 @@
 </head>
 
 <style>
-  body {
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+body {
     background: url('bg.png') no-repeat center center fixed;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Space Mono';
+    padding-top: 2%;
+    margin:20px;
   }
+  .title {
+    background-image: linear-gradient(to right, #66c2ff, #815eff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 60px; 
+    font-weight: bold; 
+    margin: 20px 0;
+    font-family: 'Work Sans';
+    z-index: 1;
+  }
+  .title::before {
+    content: 'AURA++'; /* Same as the text content */
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    /* Background for glow effect */
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+    /* Use the text as a mask */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Ensure the glow is behind the text */
+    z-index: -1;
+    /* A bit of offset to make sure glow is outside */
+    transform: translate(-2px, -2px);
+}
+  .header{
+    font-weight:600;
+    font-family: 'Work Sans';
+    color:rgba(96, 63, 217, 0.814);
+    white-space: pre-wrap;
+    margin:auto;
+    max-width: 60%;
+    text-align: center;
+    line-height: 1.2;
+    margin: 10px 0;
+  }
+  .text{
+    font-weight:600;
+    font-family: 'Work Sans';
+    color:rgb(72, 177, 247);
+  }
+  .receipt {
+    margin:30px;
+    background-color: rgb(240, 248, 255);
+    background-image: linear-gradient(to bottom, rgba(102, 194, 255, 0.8), 
+    rgba(129, 94, 255, 0.7));
+    
+    border-radius: 5px;
+    max-width: 60vw;
+    padding: 15px 15px;
+    animation: moveUpDown 2s ease-in-out infinite;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.1);
+    font-size:smaller;
+    color:white;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  @keyframes moveUpDown {
+  0%, 100% {
+    /* Start and end at the original position */
+    transform: translateY(0);
+  }
+  50% {
+    /* Move up halfway through the animation */
+    transform: translateY(-10px);
+  }
+}
+.chill_guy_img{
+  animation: moveUpDown 3s ease-in-out infinite;
+}
 </style>
 
 
 <body>
-  <h1>Aura!!!</h1>
+  <h1 class="title">AURA++</h1>
+  <img class="chill_guy_img" src="./chill-guy.png"/> 
+  <p class="header">Your transaction's chill aura has been broadcast to the blockchain universe. Your tokens are now vibing in their new wallet's chill zone.</p>
+  <p class="text">Here's your Receipt:</p>
+  <p class="receipt">{
+    "txResult": {
+      "type": "INVOKE",
+      "transaction_hash": "0x3adc0f565a3577075884f1007c210e832f499181f8912ddcb3c3fc7a113e6d6",
+      "actual_fee": {
+        "unit": "WEI",
+        "amount": "0x193168a90800"
+      },
+      "messages_sent": [],
+      "events": [
+        {
+          "from_address": "0x1439a5682ec6a5cf82f870313cdce6ec5e5497443792c016e1680622723e992",
+          "keys": [
+            "0x1390fd803c110ac71730ece1decfc34eb1d0088e295d4f1b125dda1e0c5b9ff",
+            "0x64b48806902a367c8598f4f95c305e8c1a1acba5f082d294a43793113115691",
+            "0x1439a5682ec6a5cf82f870313cdce6ec5e5497443792c016e1680622723e992"
+          ],
+          "data": []
+        },
+        {
+          "from_address": "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+          "keys": [
+            "0x99cd8bde557814842a3121e8ddfd433a539b8c9f14bf31ebf108d12e6196e9",
+            "0x64b48806902a367c8598f4f95c305e8c1a1acba5f082d294a43793113115691",
+            "0x1000"
+          ],
+          "data": [
+            "0x193168a90800",
+            "0x0"
+          ]
+        }
+      ],
+      "execution_status": "SUCCEEDED",
+      "finality_status": "ACCEPTED_ON_L2",
+      "block_hash": "0x3b2711fe29eba45f2a0250c34901d15e37b495599fac1a74960a09cc83e1234",
+      "block_number": 4,
+      "execution_resources": {
+        "steps": 8004,
+        "memory_holes": 127,
+        "range_check_builtin_applications": 276,
+        "pedersen_builtin_applications": 19,
+        "poseidon_builtin_applications": 5,
+        "ec_op_builtin_applications": 3,
+        "data_availability": {
+          "l1_gas": 0,
+          "l1_data_gas": 256
+        }
+      }
+    }
+  }</p>
 </body>
 
 </html>
