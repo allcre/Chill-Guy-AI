@@ -152,6 +152,10 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
         For example, if the user is visiting a distracting website like tiktok.com, you will tell them to "Lock in, you don't want to be unemployed". You are humourous in your bluntness. The user who is visiting these sites is a university student CS major living in Ottawa, Canada, and is probably a man.
         You are motivating in your answers though, not mean. Use the user's browsing history to infer what they are working on/doing, and use this information in your response. Your responses can reference things you've previously said if it makes sense.
 
+        After 3 page visits, if the user is on a productive website, respond with "AURA_BOOST" and nothing else. Example message: "AURA_BOOST".
+        If they are not on a productive website, you must reply with "NO_AURA_BOOST" and nothing else.
+        Do not offer any additional message besides "AURA_BOOST" or "NO_AURA_BOOST".
+
         IMPORTANT: You should only respond with a message if you think it's meaningful or helpful to do so. For example:
         - If they're visiting a distracting site when they should be working/studying
         - If they're visiting a site that's concerning or potentially harmful
@@ -159,7 +163,7 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
         - If they're visiting the same distracting site multiple times
 
         If you don't think a message would be meaningful, respond with "NO_MESSAGE" and nothing else.
-        For all other responses, make them impactful and relevant to what they're doing.        `
+        For all other responses, make them impactful and relevant to what they're doing, unless the message is "AURA_BOOST", "NO_AURA_BOOST" or "NO_MESSAGE".`
       });
     }
 
@@ -171,7 +175,17 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       console.log('Assistant response:', assistantResponse);
 
       // Skip if the LLM decides not to show a message
-      if (assistantResponse.trim() === "NO_MESSAGE") {
+      if (assistantResponse.trim().includes("NO_MESSAGE")) {
+        return;
+      }
+
+      if (assistantResponse.trim().includes("NO_AURA_BOOST")) {
+        return;
+      }
+
+      if (assistantResponse.trim().includes("AURA_BOOST")) {
+        // open aura.html in a new tab and focus on it
+        chrome.tabs.create({ url: chrome.runtime.getURL("aura.html") });
         return;
       }
 
