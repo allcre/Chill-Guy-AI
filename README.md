@@ -41,7 +41,12 @@ Chill Guy was born from the desire to make productivity tools more relatable and
 
 ## Setup Instructions
 ### Chrome Extension
-Unpack the `chillguy` folder in `chrome://extensions`
+#### Requirements
+Groq API key
+ElevenLabs API key
+
+1. Unpack the `chillguy` folder in `chrome://extensions`
+2. The first time the extension is run, you will be prompted to enter your Groq and EleventLabs API keys in the provided form. 
 
 ### Starknet
 #### Dependencies
