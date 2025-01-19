@@ -165,23 +165,23 @@ async function fetchElevenLabsAudio(text) {
     }
 
     console.log('Making ElevenLabs API request...');
-    // const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'xi-api-key': elevenLabsKey
-    //   },
-    //   body: JSON.stringify({
-    //     text: text,
-    //     model_id: "eleven_monolingual_v1",
-    //     voice_settings: {
-    //       stability: 0.5,
-    //       similarity_boost: 0.75,
-    //       style: 0.5,
-    //       use_speaker_boost: true
-    //     }
-    //   })
-    // });
+    const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': elevenLabsKey
+      },
+      body: JSON.stringify({
+        text: text,
+        model_id: "eleven_monolingual_v1",
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+          style: 0.5,
+          use_speaker_boost: true
+        }
+      })
+    });
 
     if (!response.ok) {
       console.error('ElevenLabs API error:', response.status);
@@ -207,7 +207,7 @@ async function fetchElevenLabsAudio(text) {
 // Modify the existing navigation listener
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (details.frameId === 0 && !details.url.startsWith('chrome://')) {
-    const message = { userInput: `what do you think of ${details.url}` };
+    const message = { userInput: `the user has visited ${details.url}` };
 
     const { apiKey } = await getStorageData(["apiKey"]);
     const { apiModel } = await getStorageData(["apiModel"]);
@@ -232,7 +232,7 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
         - If they're visiting the same distracting site multiple times
 
         If you don't think a message would be meaningful, respond with "NO_MESSAGE" and nothing else.
-        For all other responses, make them impactful and relevant to what they're doing.`
+        For all other responses, make them impactful and relevant to what they're doing.        `
       });
     }
 
@@ -252,7 +252,8 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       await chrome.storage.local.set({ chatHistory: updatedHistory });
 
       // Get audio as base64
-      const audioData = await fetchElevenLabsAudio(assistantResponse);
+      // const audioData = await fetchElevenLabsAudio(assistantResponse);
+      const audioData = null;
 
       // Send both text and audio data to content script
       chrome.tabs.sendMessage(details.tabId, {
