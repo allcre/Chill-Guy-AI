@@ -32,8 +32,8 @@ function createCommentaryPopup(text, audioData) {
   const speechBubble = document.createElement('div');
   speechBubble.style.cssText = `
     position: relative;
-    background-color: #343541;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -51,42 +51,25 @@ function createCommentaryPopup(text, audioData) {
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #343541;
+    border-top: 10px solid white;
   `;
-
-  // Add close button to speech bubble
-  const closeButton = document.createElement('button');
-  closeButton.innerHTML = '×';
-  closeButton.style.cssText = `
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 5px;
-  `;
-  closeButton.onclick = () => popup.remove();
 
   // Add the text content
   const content = document.createElement('div');
-  content.style.marginTop = '10px';
+  content.style.marginTop = '5px';
   content.textContent = text;
 
   // Add the character image
   const img = document.createElement('img');
   img.src = chrome.runtime.getURL('95c.png');
   img.style.cssText = `
-    width: 100px;
+    width: 200px;
     height: auto;
     display: block;
     margin-right: 20px;
   `;
 
   // Assemble the speech bubble
-  speechBubble.appendChild(closeButton);
   speechBubble.appendChild(content);
   speechBubble.appendChild(pointer);
 
