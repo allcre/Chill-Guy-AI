@@ -1,4 +1,4 @@
-# Chill Guy AI
+# chill guy ai
 
 Chill Guy AI is a Chrome extension coupled with an on-chain experience that brings the iconic "chill guy" meme to life as your personal hype-capybara. Designed to help students stay focused and motivated, this AI-powered assistant provides timely, humorous, and encouraging feedback as you browse the internet while doing schoolwork. With its unique blend of genuine productivity insights and on-chain motivation, Chill Guy keeps you on track without ruining the vibe.
 
@@ -62,9 +62,3 @@ Chill Guy AI was born from the desire to make productivity tools more relatable 
 3. Run `yarn chain`
 4. In a new terminal, run `yarn deploy --network`
 5. Run `yarn start`
-
-
-
-
-
-
