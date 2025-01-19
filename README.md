@@ -2,7 +2,7 @@
 
 Chill Guy AI is a Chrome extension coupled with an on-chain experience that brings the iconic "chill guy" meme to life as your personal hype-capybara. Designed to help students stay focused and motivated, this AI-powered assistant provides timely, humorous, and encouraging feedback as you browse the internet while doing schoolwork. With its unique blend of genuine productivity insights and on-chain motivation, Chill Guy keeps you on track without ruining the vibe.
 
-![chill guy ai demo](https://youtu.be/DkEFwWnD6pk)
+Demo video: https://youtu.be/DkEFwWnD6pk
 
 ## Features
 
