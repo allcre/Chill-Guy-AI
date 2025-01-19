@@ -1,15 +1,15 @@
-# name here! 
+# Chill Guy AI
 
 ## Description
 
-Chill Guy is a Chrome extension coupled with an on-chain experience that brings the iconic "chill guy" meme to life as your personal hype-capybara. Designed to help students stay focused and motivated, this AI-powered assistant provides timely, humorous, and encouraging feedback as you browse the internet while doing schoolwork. With its unique blend of genuine productivity insights and on-chain motivation, Chill Guy keeps you on track without ruining the vibe.
+Chill Guy AI is a Chrome extension coupled with an on-chain experience that brings the iconic "chill guy" meme to life as your personal hype-capybara. Designed to help students stay focused and motivated, this AI-powered assistant provides timely, humorous, and encouraging feedback as you browse the internet while doing schoolwork. With its unique blend of genuine productivity insights and on-chain motivation, Chill Guy keeps you on track without ruining the vibe.
 
 ## Features
 
-- **AI-Powered Dialogue**: Chill Guy analyzes your browsing habits in real-time and offers witty, context-aware comments to keep you motivated.
+- **AI-Powered Dialogue**: Chill Guy AI analyzes your browsing habits in real-time and offers witty, context-aware comments to keep you motivated.
 - **Gain Aura**: Earn aura points for consistent productivity, visualized through an immersive "aura" experience.
 - **On-Chain Rewards**: Leverage Starknet blockchain technology to issue and store aura points as digital assets.
-- **Audio Feedback**: Hear Chill Guy's advice with text-to-speech functionality, bringing the capybara to life.
+- **Audio Feedback**: Hear Chill Guy AI's advice with text-to-speech functionality, bringing the capybara to life.
 
 ## Inspiration
 
@@ -17,10 +17,10 @@ Chill Guy was born from the desire to make productivity tools more relatable and
 
 ## How It Works
 
-1. Chill Guy monitors your browsing activity in the background.
+1. Chill Guy AI monitors your browsing activity in the background.
 2. When you visit a website, it analyzes the content and your browsing history.
-3. Based on this analysis, Chill Guy decides whether to offer advice, encouragement, or a gentle nudge to stay on track.
-4. For consistently productive behavior, you can earn an "Aura Boost," visualized through an immersive full-screen experience.
+3. Based on this analysis, Chill Guy AI decides whether to offer advice, encouragement, or a gentle nudge to stay on track.
+4. For consistently productive behavior, you can earn aura points, visualized through an immersive full-screen experience.
 5. Your productivity achievements are recorded on the Starknet blockchain, creating a permanent record of your progress.
 
 ## Tech Stack
@@ -36,6 +36,7 @@ Chill Guy was born from the desire to make productivity tools more relatable and
 ## Future Plans
 
 - Implement a social feature allowing friends to share and compare their productivity stats.
+- Allow users to converse with Chill Guy AI.
 - Expand the range of on-chain rewards and introduce NFT-based achievements.
 - Integrate with other applications for more comprehensive tracking and rewards.
 
