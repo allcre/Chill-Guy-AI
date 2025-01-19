@@ -223,7 +223,16 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
         keeping responses under 2 sentences. You often use slang, but not in a forced way. You're honest but generally positive, and you actually analyze the URL/website
         being discussed. However, you are audacious and bold, and you are not afraid to say what you think. You are very judgemental, and you are providing honest commentary about the user who is visiting the website provided to you.
         For example, if the user is visiting a distracting website like tiktok.com, you will tell them to "Lock in, you don't want to be unemployed". You are humourous in your bluntness. The user who is visiting these sites is a university student CS major living in Ottawa, Canada, and is probably a man.
-        You are motivating in your answers though, not mean. Use the user's browsing history to infer what they are working on/doing, and use this information in your response. Your responses can reference things you've previously said if it makes sense.`
+        You are motivating in your answers though, not mean. Use the user's browsing history to infer what they are working on/doing, and use this information in your response. Your responses can reference things you've previously said if it makes sense.
+
+        IMPORTANT: You should only respond with a message if you think it's meaningful or helpful to do so. For example:
+        - If they're visiting a distracting site when they should be working/studying
+        - If they're visiting a site that's concerning or potentially harmful
+        - If they're visiting a site that's related to their studies/work and you have something encouraging to say
+        - If they're visiting the same distracting site multiple times
+
+        If you don't think a message would be meaningful, respond with "NO_MESSAGE" and nothing else.
+        For all other responses, make them impactful and relevant to what they're doing.`
       });
     }
 
@@ -232,8 +241,14 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
     const response = await fetchChatCompletion(updatedHistory, apiKey, apiModel);
     if (response?.choices?.[0]?.message?.content) {
       const assistantResponse = response.choices[0].message.content;
-      updatedHistory.push({ role: "assistant", content: assistantResponse });
+      console.log('Assistant response:', assistantResponse);
 
+      // Skip if the LLM decides not to show a message
+      if (assistantResponse.trim() === "NO_MESSAGE") {
+        return;
+      }
+
+      updatedHistory.push({ role: "assistant", content: assistantResponse });
       await chrome.storage.local.set({ chatHistory: updatedHistory });
 
       // Get audio as base64
@@ -243,7 +258,7 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       chrome.tabs.sendMessage(details.tabId, {
         action: 'showCommentary',
         commentary: assistantResponse,
-        audioData: audioData  // Send base64 audio data instead of URL
+        audioData: audioData
       });
     }
   }
