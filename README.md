@@ -11,7 +11,7 @@ Chill Guy AI is a Chrome extension coupled with an on-chain experience that brin
 
 ## Inspiration
 
-Chill Guy was born from the desire to make productivity tools more relatable and engaging for students. By embodying the laid-back yet insightful persona of the "chill guy" meme, we've created an assistant that speaks the language of today's students while genuinely helping them stay focused.
+Chill Guy AI was born from the desire to make productivity tools more relatable and engaging for students. By embodying the laid-back yet insightful persona of the "chill guy" meme, we've created an assistant that speaks the language of today's students while genuinely helping them stay focused.
 
 ## How It Works
 
