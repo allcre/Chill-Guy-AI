@@ -11,16 +11,6 @@ Chill Guy is a Chrome extension coupled with an on-chain experience that brings 
 - **On-Chain Rewards**: Leverage Starknet blockchain technology to issue and store aura points as digital assets.
 - **Audio Feedback**: Hear Chill Guy's advice with text-to-speech functionality, bringing the capybara to life.
 
-## Tech Stack
-
-- AI Integration: Groq API for natural language processing
-- Audio Generation: ElevenLabs API for text-to-speech
-- Blockchain: Starknet for on-chain rewards
-- Chrome Extension: JavaScript, Chrome Extension API
-- Smart Contracts: Cairo programming language
-- Development Framework: Scaffold-Stark for rapid Starknet dapp development
-- Frontend: HTML, CSS, JavaScript
-
 ## Inspiration
 
 Chill Guy was born from the desire to make productivity tools more relatable and engaging for students. By embodying the laid-back yet insightful persona of the "chill guy" meme, we've created an assistant that speaks the language of today's students while genuinely helping them stay focused.
@@ -32,6 +22,16 @@ Chill Guy was born from the desire to make productivity tools more relatable and
 3. Based on this analysis, Chill Guy decides whether to offer advice, encouragement, or a gentle nudge to stay on track.
 4. For consistently productive behavior, you can earn an "Aura Boost," visualized through an immersive full-screen experience.
 5. Your productivity achievements are recorded on the Starknet blockchain, creating a permanent record of your progress.
+
+## Tech Stack
+
+- AI Integration: Groq API for natural language processing
+- Audio Generation: ElevenLabs API for text-to-speech
+- Blockchain: Starknet for on-chain rewards
+- Chrome Extension: JavaScript, Chrome Extension API
+- Smart Contracts: Cairo programming language
+- Development Framework: Scaffold-Stark for rapid Starknet dapp development
+- Frontend: HTML, CSS, JavaScript
 
 ## Future Plans
 
