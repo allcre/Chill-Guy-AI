@@ -2,14 +2,24 @@
 function createCommentaryPopup(text, audioData) {
   console.log('Creating popup with:', { text, hasAudio: !!audioData });
 
+  // Calculate random position along the bottom
+  const windowWidth = window.innerWidth;
+  const popupWidth = 300; // max-width of our popup
+  const minMargin = 20; // minimum distance from edges
+  const maxX = windowWidth - popupWidth - minMargin;
+  const randomX = Math.max(minMargin, Math.floor(Math.random() * maxX));
+
+  // Randomly decide if image should be flipped
+  const shouldFlip = Math.random() > 0.5;
+
   const popup = document.createElement('div');
   popup.style.cssText = `
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: ${randomX}px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: ${shouldFlip ? 'flex-start' : 'flex-end'};
     max-width: 300px;
     z-index: 2147483647;
     font-family: Arial, sans-serif;
@@ -22,8 +32,8 @@ function createCommentaryPopup(text, audioData) {
   const style = document.createElement('style');
   style.textContent = `
     @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   `;
   document.head.appendChild(style);
@@ -46,7 +56,7 @@ function createCommentaryPopup(text, audioData) {
   pointer.style.cssText = `
     position: absolute;
     bottom: -10px;
-    right: 40px;
+    ${shouldFlip ? 'left' : 'right'}: 40px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -66,7 +76,8 @@ function createCommentaryPopup(text, audioData) {
     width: 200px;
     height: auto;
     display: block;
-    margin-right: 20px;
+    margin-${shouldFlip ? 'left' : 'right'}: 20px;
+    transform: scaleX(${shouldFlip ? -1 : 1});
   `;
 
   // Assemble the speech bubble
