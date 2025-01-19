@@ -75,8 +75,8 @@ function mockGroqApiCall(input) {
         "Dude, you're vibing hard right now!"
       ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      resolve({ 
-        text: randomResponse, 
+      resolve({
+        text: randomResponse,
         imageUrl: chrome.runtime.getURL('95c.png')
       });
     }, 1000);
@@ -196,8 +196,8 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       await chrome.storage.local.set({ chatHistory: updatedHistory });
 
       // Get audio as base64
-      // const audioData = await fetchElevenLabsAudio(assistantResponse);
-      const audioData = null;
+      const audioData = await fetchElevenLabsAudio(assistantResponse);
+      // const audioData = null;
 
       // Send both text and audio data to content script
       chrome.tabs.sendMessage(details.tabId, {

@@ -25,15 +25,17 @@ function createCommentaryPopup(text, audioData) {
     font-family: Arial, sans-serif;
     font-size: 14px;
     line-height: 1.4;
-    animation: slideIn 0.3s ease-out;
+    animation: slideIn 1.5s ease-out;
   `;
 
   // Add animation keyframes
   const style = document.createElement('style');
   style.textContent = `
     @keyframes slideIn {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      0% { transform: translateY(100%); opacity: 0; }
+      50% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
   `;
   document.head.appendChild(style);
@@ -88,13 +90,58 @@ function createCommentaryPopup(text, audioData) {
   popup.appendChild(speechBubble);
   popup.appendChild(img);
 
-  // Auto-remove after 10 seconds
-  setTimeout(() => {
-    if (popup.parentNode) {
-      console.log('Auto-removing popup after 10 seconds');
-      popup.remove();
+  // Handle audio if provided
+  if (audioData) {
+    console.log('Audio data received, creating blob');
+    const binaryStr = atob(audioData);
+    const bytes = new Uint8Array(binaryStr.length);
+    for (let i = 0; i < binaryStr.length; i++) {
+      bytes[i] = binaryStr.charCodeAt(i);
     }
-  }, 100000);
+    const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+
+    // Remove popup when audio ends
+    audio.addEventListener('ended', () => {
+      console.log('Audio ended, removing popup');
+      if (popup.parentNode) {
+        // Add fade out animation
+        popup.style.animation = 'fadeOut 0.5s ease-out';
+        setTimeout(() => popup.remove(), 500);
+      }
+    });
+
+    // Add fade out animation
+    const fadeOutStyle = document.createElement('style');
+    fadeOutStyle.textContent = `
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(20px); }
+      }
+    `;
+    document.head.appendChild(fadeOutStyle);
+
+    // Start playing audio
+    audio.play().catch(error => {
+      console.error('Audio playback failed:', error);
+      // Fallback to timeout if audio fails
+      setTimeout(() => {
+        if (popup.parentNode) {
+          popup.style.animation = 'fadeOut 0.5s ease-out';
+          setTimeout(() => popup.remove(), 500);
+        }
+      }, 10000);
+    });
+  } else {
+    // If no audio, remove after 10 seconds
+    setTimeout(() => {
+      if (popup.parentNode) {
+        popup.style.animation = 'fadeOut 0.5s ease-out';
+        setTimeout(() => popup.remove(), 500);
+      }
+    }, 10000);
+  }
 
   return popup;
 }
