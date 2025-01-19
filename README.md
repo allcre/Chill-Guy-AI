@@ -1,2 +1,64 @@
-# Karavelson-uOttahack
-Karan Avery Ellen Allison uOttaHack 2025 project
+# name here! 
+
+## Description
+
+Chill Guy is a Chrome extension that brings the iconic "chill guy" meme to life as your personal hype-capybara. Designed to help students stay focused and motivated, this AI-powered assistant provides timely, humorous, and encouraging feedback as you complete your CS assingments. With its unique blend of genuine productivity insights and on-chain motivation, Chill Guy keeps you on track without ruining the vibe.
+
+## Features
+
+- **AI-Powered Dialogue**: Chill Guy analyzes your browsing habits in real-time and offers witty, context-aware comments to keep you motivated.
+- **On-Chain Rewards**: Leverage Starknet blockchain technology to issue and store productivity achievements as digital assets.
+- **Audio Feedback**: Hear Chill Guy's advice with text-to-speech functionality, bringing the capybara to life.
+- **Aura Boost**: Earn rewards for consistent productivity, visualized through an immersive "aura" experience.
+
+## Tech Stack
+
+- AI Integration: Groq API for natural language processing
+- Audio Generation: ElevenLabs API for text-to-speech
+- Blockchain: Starknet for on-chain rewards
+- Chrome Extension: JavaScript, Chrome Extension API
+- Smart Contracts: Cairo programming language
+- Development Framework: Scaffold-Stark for rapid Starknet dapp development
+- Frontend: HTML, CSS, JavaScript
+
+## Inspiration
+
+Chill Guy was born from the desire to make productivity tools more relatable and engaging for students. By embodying the laid-back yet insightful persona of the "chill guy" meme, we've created an assistant that speaks the language of today's students while genuinely helping them stay focused.
+
+## How It Works
+
+1. Chill Guy monitors your browsing activity in the background.
+2. When you visit a website, it analyzes the content and your browsing history.
+3. Based on this analysis, Chill Guy decides whether to offer advice, encouragement, or a gentle nudge to stay on track.
+4. For consistently productive behavior, you can earn an "Aura Boost," visualized through an immersive full-screen experience.
+5. Your productivity achievements are recorded on the Starknet blockchain, creating a permanent record of your progress.
+
+## Future Plans
+
+- Implement a social feature allowing friends to share and compare their productivity stats.
+- Expand the range of on-chain rewards and introduce NFT-based achievements.
+- Integrate with other applications for more comprehensive tracking and rewards.
+
+## Setup Instructions
+### Chrome Extension
+Unpack the `chillguy` folder in `chrome://extensions`
+
+### Starknet
+#### Dependencies
+Node (>= v18.17)
+Yarn (v1 or v2+)
+Git
+Rust
+asdf
+
+1. Enter the starknet directory: `cd starknet`
+2. Run `yarn install`
+3. Run `yarn chain`
+4. In a new terminal, run `yarn deploy --network`
+5. Run `yarn start`
+
+
+
+
+
+
