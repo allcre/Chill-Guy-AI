@@ -7,9 +7,9 @@ Chill Guy is a Chrome extension that brings the iconic "chill guy" meme to life 
 ## Features
 
 - **AI-Powered Dialogue**: Chill Guy analyzes your browsing habits in real-time and offers witty, context-aware comments to keep you motivated.
-- **On-Chain Rewards**: Leverage Starknet blockchain technology to issue and store productivity achievements as digital assets.
+- **Gain Aura**: Earn aura points for consistent productivity, visualized through an immersive "aura" experience.
+- **On-Chain Rewards**: Leverage Starknet blockchain technology to issue and store aura points as digital assets.
 - **Audio Feedback**: Hear Chill Guy's advice with text-to-speech functionality, bringing the capybara to life.
-- **Aura Boost**: Earn rewards for consistent productivity, visualized through an immersive "aura" experience.
 
 ## Tech Stack
 
